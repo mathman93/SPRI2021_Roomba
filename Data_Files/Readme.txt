@@ -1,1 +1,1 @@
-This folder will contain data that we collect. :)
+This folder will contain data that we collect.
