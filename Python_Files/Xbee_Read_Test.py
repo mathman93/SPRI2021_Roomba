@@ -7,6 +7,7 @@ Last Modified: 2/11/2020
 import serial
 import time
 import RPi.GPIO as GPIO
+import math
 
 ## Variables and Constants ##
 global Xbee # Specifies connection to Xbee
@@ -40,13 +41,12 @@ sendtime_offset = 1.0 # Time between sending messages
 basetime = time.time()
 basetime_offset = 0.5 # Time between LED blinks
 
-
 while True:
 	try:
 		if (time.time() - sendtime) > sendtime_offset:
-			message = '1' # Change this to any character string you want
+			message = 'a' # Change this to any character string you want
 			Xbee.write(message.encode()) # Send the number over the Xbee
-			print("you sent stuff")
+			print("You sent stuff.")
 			sendtime += sendtime_offset # Increase offset for next time to send message
 		
 		if Xbee.inWaiting() > 0: # If there is something in the receive buffer
@@ -64,6 +64,7 @@ while True:
 	except KeyboardInterrupt:
 		print('')
 		break
+# End while True
 
 ## -- Ending Code Starts Here -- ##
 # Make sure this code runs to end the program cleanly
