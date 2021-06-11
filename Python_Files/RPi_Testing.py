@@ -3,6 +3,7 @@ Purpose: Basic code for running Xbee, and illustrating code behavior.
 	Sets up Xbee;
 IMPORTANT: Must be run using Python 3 (python3)
 Last Modified: 6/11/2021
+By: Timothy Anglea
 '''
 ## Import libraries ##
 import serial
@@ -32,7 +33,7 @@ if Xbee.inWaiting() > 0: # If anything is in the Xbee receive buffer
 	#print(x) # Include for debugging
 
 phase = float(input("Initial oscillator phase? ")) # What are the units of 'phase'?
-print("Initial phase value: {0}".format(phase))
+print("Initial phase value: {0} [units]".format(phase))
 
 # Main Code #
 
