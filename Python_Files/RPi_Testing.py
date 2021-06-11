@@ -6,9 +6,9 @@ Last Modified: 6/11/2021
 By: Timothy Anglea
 '''
 ## Import libraries ##
-import serial
-import time
-import RPi.GPIO as GPIO
+import serial # For serial port functions (e.g., USB)
+import time # For accessing system time
+import RPi.GPIO as GPIO # For IO pin access on Raspberry Pi
 
 ## Variables and Constants ##
 global Xbee # Specifies connection to Xbee
