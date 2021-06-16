@@ -36,7 +36,20 @@ phase = float(input("Initial oscillator phase? ")) # What are the units of 'phas
 print("Initial phase value: {0} [units]".format(phase))
 
 # Main Code #
-
+while True:
+	try:
+		pass
+		#1. Get current phase value
+			# How fast is oscillator "spinning"?
+			
+		#2. Fire a pulse when phase reaches threshold
+			# 2a. reset phase value to zero.
+			# 2b. send pulse to other oscillators (Xbee)
+		#3. Check for any received pulses from other oscillators
+			# Update phase value based on sync algorithm.
+	except KeyboardInterrupt:
+		break
+# End while
 
 ## -- Ending Code Starts Here -- ##
 # Make sure this code runs to end the program cleanly
