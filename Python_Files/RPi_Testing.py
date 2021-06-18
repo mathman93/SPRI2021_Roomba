@@ -32,21 +32,40 @@ if Xbee.inWaiting() > 0: # If anything is in the Xbee receive buffer
 	x = Xbee.read(Xbee.inWaiting()).decode() # Clear out Xbee input buffer
 	#print(x) # Include for debugging
 
-phase = float(input("Initial oscillator phase? ")) # What are the units of 'phase'?
-print("Initial phase value: {0} [units]".format(phase))
+initial_phase = float(input("Initial oscillator phase? ")) # What are the units of 'phase'?
+print("Initial phase value: {0} [units]".format(initial_phase))
 
+threshold = 360 # "degrees" (could be radians)
+data_time = time.time()
+data_step = 1.0 # seconds
+phase_time = time.time() - initial_phase
+# (time.time() - phase_time) = phase
+# time.time() = phase_time + phase
+# time.time() - phase = phase_time
 # Main Code #
 while True:
 	try:
-		pass
+		current_phase = time.time() - phase_time
 		#1. Get current phase value
 			# How fast is oscillator "spinning"?
 			
 		#2. Fire a pulse when phase reaches threshold
 			# 2a. reset phase value to zero.
+		if current_phase >= threshold:
+			print("Phase Reset.")
+			#phase_time = time.time() # This works, but is slightly variable
+			phase_time += threshold # This is more consistent.
+			current_phase -= threshold
 			# 2b. send pulse to other oscillators (Xbee)
+		# End if
+
 		#3. Check for any received pulses from other oscillators
 			# Update phase value based on sync algorithm.
+		
+		if (time.time()-data_time) > data_step:
+			print("Current phase value: {0} [units]".format(current_phase)) # Display phase data to screen
+			data_time += data_step # Increment data_time
+		# End if
 	except KeyboardInterrupt:
 		break
 # End while
