@@ -28,14 +28,17 @@ GPIO.setmode(GPIO.BCM) # Use BCM pin numbering for GPIO
 DisplayDateTime() # Display current date and time
 
 # Clear out Xbee message buffer.
-if Xbee.inWaiting() > 0: # If anything is in the Xbee receive buffer
-	x = Xbee.read(Xbee.inWaiting()).decode() # Clear out Xbee input buffer
-	#print(x) # Include for debugging
+#if Xbee.inWaiting() > 0: # If anything is in the Xbee receive buffer
+#	x = Xbee.read(Xbee.inWaiting()).decode() # Clear out Xbee input buffer
+#	#print(x) # Include for debugging
 
 initial_phase = float(input("Initial oscillator phase? ")) # What are the units of 'phase'?
 print("Initial phase value: {0} [units]".format(initial_phase))
+speed = float(input("Oscillator spin rate ")) # What are the units of 'phase'?
+print("Speed value: {0} [units]".format(speed))
 
-threshold = 60 # "secs" (could be radians)
+
+threshold = 360 # "secs" (could be radians)
 data_time = time.time()
 data_step = 1.0 # seconds
 phase_time = time.time() - initial_phase
@@ -45,7 +48,7 @@ phase_time = time.time() - initial_phase
 # Main Code #
 while True:
 	try:
-		current_phase = time.time() - phase_time
+		current_phase = (time.time() - phase_time) + speed
 		#1. Get current phase value
 			# How fast is oscillator "spinning"?
 			
@@ -65,6 +68,7 @@ while True:
 		if (time.time()-data_time) > data_step:
 			print("Current phase value: {0} [units]".format(current_phase)) # Display phase data to screen
 			data_time += data_step # Increment data_time
+            print(speed)
 		# End if
 	except KeyboardInterrupt:
 		break
