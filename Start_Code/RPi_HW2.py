@@ -93,15 +93,15 @@ while True:
                      
                     QD = (coupling_strengthP*(-current_phase)) # My Q function for delay
                     
-                    current_phase += current_phase + QD #Calculating how much phase to change
-                    phase_time += QD/frequency  #Converting from degrees to seconds to update phase_time
+                    current_phase = current_phase + QD #Calculating how much phase to change
+                    phase_time += -QD/frequency  #Converting from degrees to seconds to update phase_time
                     
             elif current_phase >= (threshold/2): # If equation is set for a advance
             
                     QA = (coupling_strengthP*(threshold-current_phase)) #My Q function for advance
                     
-                    current_phase  += current_phase + QA #Calculating how much phase to change
-                    phase_time += QA/frequency #Converting from degrees to seconds to update phase_time
+                    current_phase  = current_phase + QA #Calculating how much phase to change
+                    phase_time += -QA/frequency #Converting from degrees to seconds to update phase_time
 
 		# End if
 		
