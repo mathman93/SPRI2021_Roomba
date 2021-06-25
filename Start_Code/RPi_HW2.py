@@ -32,8 +32,8 @@ while True:
 	try:
 		initial_phase = float(input("Initial oscillator phase? ")) # What are the units of 'phase'?
 		print("Initial phase value: {0} degrees".format(initial_phase))
-        coupling_strength = float(input("Enter coupling strength ")) # What percentage of
-        print("Coupling_strength: {0} %".format(coupling_strength))
+		coupling_strength = float(input("Enter coupling strength ")) # What percentage of
+		print("Coupling_strength: {0} %".format(coupling_strength))
 		break
 	except ValueError:
 		print("Not a number. Try again.")
@@ -89,19 +89,19 @@ while True:
 			print(received_pulse) # To see what the message is
 			# Update phase value based on sync algorithm.
     
-            if  current_phase < (threshold/2):  #If equation is set for delay
+			if  current_phase < (threshold/2):  #If equation is set for delay
                      
-                    QD = (coupling_strengthP*(-current_phase)) # My Q function for delay
+					QD = (coupling_strengthP*(-current_phase)) # My Q function for delay
                     
-                    current_phase = current_phase + QD #Calculating how much phase to change
-                    phase_time += -QD/frequency  #Converting from degrees to seconds to update phase_time
+					current_phase = current_phase + QD #Calculating how much phase to change
+					phase_time += -QD/frequency  #Converting from degrees to seconds to update phase_time
                     
-            elif current_phase >= (threshold/2): # If equation is set for a advance
+			elif current_phase >= (threshold/2): # If equation is set for a advance
             
-                    QA = (coupling_strengthP*(threshold-current_phase)) #My Q function for advance
+					QA = (coupling_strengthP*(threshold-current_phase)) #My Q function for advance
                     
-                    current_phase  = current_phase + QA #Calculating how much phase to change
-                    phase_time += -QA/frequency #Converting from degrees to seconds to update phase_time
+					current_phase  = current_phase + QA #Calculating how much phase to change
+					phase_time += -QA/frequency #Converting from degrees to seconds to update phase_time
 
 		# End if
 		
