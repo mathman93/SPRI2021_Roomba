@@ -58,9 +58,9 @@ while True:
             if g > 1: # if phase value with increment hits threshold, fire pulse. Must reset phase to 0
                 phase_time += current_phase / frequency  # do we need to calculate how much time has passed?
 
-
-            updated_phase = g * 360
-            phase_time = phase_time - ((updated_phase - current_phase) / frequency) # how much time do we take
+            else:
+                updated_phase = g * threshold # scales it up to threshold
+                phase_time = phase_time - ((updated_phase - current_phase) / frequency) # how much time do we take
 
                 # End if
 
