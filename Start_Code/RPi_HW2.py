@@ -88,19 +88,17 @@ while True:
 			# received_pulse = "z" (pulse)
 			print(received_pulse) # To see what the message is
 			# Update phase value based on sync algorithm.
-            #
     
-            if  current_phase < (threshold/2)  #If equation is set for advance
+            if  current_phase < (threshold/2):  #If equation is set for delay
                                                 #Secondly I do not remember if I am changing the pcurrent phase or time to take, make sure to ask my boy Timothy
                                                # Was not 100% sure but 0 sub i in the papers equation should be the oscillator phase, so I am going with that.
-                    current_phase  = current_phase*(time_to_take) + (coupling_strengthP*(1-current_phase)*time_to_take)
-            elif current_phase >= (threshold/2) # If equation is set for a delay
-                    current_phase  = current_phase*(time_to_take) + (coupling_strengthP*(-current_phase)*time_to_take)
+                    current_phase  = current_phase + (coupling_strengthP*(-current_phase))
                     
-
-
                     
+            elif current_phase >= (threshold/2): # If equation is set for a advance
 
+                    current_phase  = current_phase + (coupling_strengthP*(threshold-current_phase))
+                    
 		# End if
 		
 		if (time.time()-data_time) > data_step:
