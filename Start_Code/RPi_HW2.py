@@ -2,8 +2,8 @@
 Purpose: Basic code for running Xbee, and illustrating code behavior.
 	Sets up Xbee;
 IMPORTANT: Must be run using Python 3 (python3)
-Last Modified: 6/21/2021
-By: Timothy Anglea
+Last Modified: 6/25/2021
+By: Jamez White
 '''
 ## Import libraries ##
 import serial # For serial port functions (e.g., USB)
@@ -116,3 +116,4 @@ while True:
 
 Xbee.close()
 GPIO.cleanup() # Reset GPIO pins for next program
+
