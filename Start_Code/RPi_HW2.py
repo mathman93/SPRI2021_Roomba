@@ -32,6 +32,8 @@ while True:
 	try:
 		initial_phase = float(input("Initial oscillator phase? ")) # What are the units of 'phase'?
 		print("Initial phase value: {0} degrees".format(initial_phase))
+        coupling_strength = float(input("Enter coupling strength ")) # What percentage of
+        print("Coupling_strength: {0} %".format(coupling_strength))
 		break
 	except ValueError:
 		print("Not a number. Try again.")
@@ -56,6 +58,7 @@ phase_time = time.time() - (initial_phase/frequency) # Time offset for the oscil
 # time.time() - phase = phase_time
 pulse = 'z' # Oscillator pulse character
 
+coupling_strengthP = coupling_strength/100 # this conversts the coupling strength in a percent so we can use it later.
 data_time = time.time()
 data_step = 1.0 # seconds
 # Main Code #
@@ -85,19 +88,18 @@ while True:
 			# received_pulse = "z" (pulse)
 			print(received_pulse) # To see what the message is
 			# Update phase value based on sync algorithm.
-            #In coolretion to Dr.Wangs document on PCO's and Energy efficient sync
-            # To my knowledge the format of this PCO system is that once a oscillator recivies a pulse it will check its current phase to determine whether or not it needs to advance or have a delay.
-            # After reading it was not a 100% sure on how the delay worked but for the advancement I did find an equation that I beleive is the correct one.
-            
-            if  current_phase > (threshold/2)
-                    # at this point we would need to have a advandment, at a time determined by an equation, pg 4 section B, formula 2, I think...
-            elif current_phase < (threshold/2)
-                    # This would then lead to a delay possibly a refractory period??
-            elif current_phase = threshold or current_phase = 0
-                    # No change in stance
+            #
+    
+            if  current_phase < (threshold/2)  #If equation is set for advance
+                                                #Secondly I do not remember if I am changing the pcurrent phase or time to take, make sure to ask my boy Timothy
+                                               # Was not 100% sure but 0 sub i in the papers equation should be the oscillator phase, so I am going with that.
+                    current_phase  = current_phase*(time_to_take) + (coupling_strengthP*(1-current_phase)*time_to_take)
+            elif current_phase >= (threshold/2) # If equation is set for a delay
+                    current_phase  = current_phase*(time_to_take) + (coupling_strengthP*(-current_phase)*time_to_take)
+                    
 
 
-
+                    
 
 		# End if
 		
