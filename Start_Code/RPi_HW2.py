@@ -90,15 +90,15 @@ while True:
 			# Update phase value based on sync algorithm.
     
             if  current_phase < (threshold/2):  #If equation is set for delay
-                                                #Secondly I do not remember if I am changing the pcurrent phase or time to take, make sure to ask my boy Timothy
-                                               # Was not 100% sure but 0 sub i in the papers equation should be the oscillator phase, so I am going with that.
-                    current_phase  = current_phase + (coupling_strengthP*(-current_phase))
-                    
+                                              
+                    current_phase  += current_phase + (coupling_strengthP*(-current_phase)) #Calculating how much phase to change
+                    phase_time += current_phase/frequency  #Converting from degrees to seconds to update phase_time
                     
             elif current_phase >= (threshold/2): # If equation is set for a advance
+            
+                    current_phase  = current_phase + (coupling_strengthP*(threshold-current_phase)) #Calculating how much phase to change
+                    phase_time += current_phase/frequency #Converting from degrees to seconds to update phase_time
 
-                    current_phase  = current_phase + (coupling_strengthP*(threshold-current_phase))
-                    
 		# End if
 		
 		if (time.time()-data_time) > data_step:
