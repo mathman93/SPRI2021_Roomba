@@ -118,3 +118,8 @@ while True:
             # End if
     except KeyboardInterrupt:
         break
+## -- Ending Code Starts Here -- ##
+# Make sure this code runs to end the program cleanly
+
+Xbee.close()
+GPIO.cleanup() # Reset GPIO pins for next program
