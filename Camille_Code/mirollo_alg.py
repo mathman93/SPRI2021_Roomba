@@ -99,8 +99,7 @@ while True:
             # Update phase value based on sync algorithm.
             scaled_phase = 1 / threshold  # scale 360 down for function that is in terms of max of 1
 
-            f = (1 / 2) * math.log(
-                1 + (math.exp(2) - 1) * scaled_phase) + .1  # map state value and increment by small amount
+            f = (1 / 2) * math.log(1 + (math.exp(2) - 1) * scaled_phase) + .1  # map state value and increment by small amount
             g = (math.exp(2 * f) - 1) / (math.exp(2) - 1)  # map f back into phase
 
             if g > 1:  # if phase value with increment hits threshold, fire pulse. Must reset phase to 0
