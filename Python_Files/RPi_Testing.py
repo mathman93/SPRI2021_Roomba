@@ -44,7 +44,7 @@ if Xbee.inWaiting() > 0: # If anything is in the Xbee receive buffer
 	#print(x) # Include for debugging
 # End if
 
-time_to_take = 2.0 # Length of cycle in seconds
+time_to_take = 3.0 # Length of cycle in seconds
 # frequency = 180 # degrees per second
 threshold = 360 # "degrees" (could be radians)
 frequency = threshold / time_to_take # degrees per second
@@ -57,7 +57,7 @@ phase_time = time.time() - (initial_phase/frequency) # Time offset for the oscil
 pulse = 'z' # Oscillator pulse character
 
 data_time = time.time()
-data_step = 1.0 # seconds
+data_step = 0.5 # seconds
 # Main Code #
 while True:
 	try:
@@ -86,11 +86,6 @@ while True:
 			print(received_pulse) # To see what the message is
 		
 			# Update phase value based on sync algorithm.
-
-
-
-
-
 
 		# End if
 		
