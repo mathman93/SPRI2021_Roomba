@@ -44,6 +44,7 @@ if Xbee.inWaiting() > 0: # If anything is in the Xbee receive buffer
 	#print(x) # Include for debugging
 # End if
 
+N = 3 # Number of oscillators
 time_to_take = 3.0 # Length of cycle in seconds
 # frequency = 180 # degrees per second
 threshold = 360 # "degrees" (could be radians)
@@ -58,6 +59,7 @@ pulse = 'z' # Oscillator pulse character
 
 data_time = time.time()
 data_step = 0.5 # seconds
+just_fired = False
 # Main Code #
 while True:
 	try:
@@ -77,6 +79,7 @@ while True:
 			# 2b. send pulse to other oscillators (Xbee)
 			Xbee.write(pulse.encode()) # Send the number over the Xbee
 			print("You sent stuff.")
+			just_fired = True
 		# End if
 
 		#3. Check for any received pulses from other oscillators
@@ -85,7 +88,36 @@ while True:
 			# received_pulse = "z" (pulse)
 			print(received_pulse) # To see what the message is
 		
-			# Update phase value based on sync algorithm.
+			# Update phase value based on (de)sync algorithm.
+			# DESYNC algorithm - move to the midpoint
+			if just_fired == False:
+				pass
+				# Save value of oscillator in front of me. 
+				# (forward_phase = threshold - current_phase)
+			else: #if just_fired == True:
+				pass
+				# Backward_phase = (-1)*current_phase
+				# Calculated midpoint, and move there
+			
+			just_fired = False
+			
+			# Inverse-MS algorithm - always move backwards
+			# phase_change = -(alpha)*current_phase
+				# alpha is pretty small, probably less than 0.1
+			# current_phase += phase_change (also update phase_time)
+
+			# PRF Desync - Look up value to change in PRF
+			if current_phase > threshold * (N-1)/N:
+				pass
+				# move backwards in phase
+			elif current_phase < threshold * (1/N):
+				pass
+				# move forwards in phase
+			else:
+				pass
+				# Don't move at all
+			# End if
+
 
 		# End if
 		
