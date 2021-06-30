@@ -64,8 +64,8 @@ data_step = 1.0 # seconds
 just_fired = False
 # Main Code #
 while True:
-	try:
-		#1. Get current phase value
+	try:	
+			#1. Get current phase value
 			# How fast is oscillator "spinning"?
 			# #time_phase = time.time() - phase_time
 		current_phase = (time.time() - phase_time)*frequency # The current phase of the oscillator (in degrees)
@@ -81,7 +81,7 @@ while True:
 			# 2b. send pulse to other oscillators (Xbee)
 			Xbee.write(pulse.encode()) # Send the number over the Xbee
 			print("You sent stuff.")
-            just_fired = True
+			just_fired = True
 		# End if
 
 		#3. Check for any received pulses from other oscillators
@@ -91,46 +91,44 @@ while True:
 			print(received_pulse) # To see what the message is
             # Update phase value based on (de)sync algorithm.
             # DESYNC algorithm - move to the midpoint
-            if just_fired == False:
-                pass
+		if just_fired == False:
+			pass
                 # Save value of oscillator in front of me.
                 # (forward_phase = threshold - current_phase)
-            else: #if just_fired == True:
-                pass
+		else: 
+				pass
                 # Backward_phase = (-1)*current_phase
                 # Calculated midpoint, and move there
-            
-            just_fired = False
+				just_fired = False
+    		
             
             # Inverse-MS algorithm - always move backwards
-             #alpha in Degesys 2007 is user inputed, page 6 out of 10
-             alpha = .09
-             phase_change = -(coupling_strengthP)*current_phase
+            
+				phase_change = -(coupling_strengthP)*current_phase
                 # alpha is pretty small, probably less than 0.1
-             current_phase += phase_change # (also update phase_time)
-              phase_time += alpha/frequency
-            #I am not 100% sure on this one, on the doucment I was looking at, I could not get a clear idea on it (Nagpal)
+				current_phase += phase_change # (also update phase_time)
+				phase_time -= phase_change/frequency
             
             
             # PRF Desync - Look up value to change in PRF
             
-            #This one was similar to the synch one just with a few added things, (I think that was the whole point though), with that being said I assumed the symbol that looks like an l is coupling strength in another formed, so it was treated like so. 
-            if  currrent < threshold * (1/N)::
-            
-                QD = -coupling_strengthP*(current_phase-(threshold/N))
-                Current_phase = current_phase + QD #Calculating how much phase to change
-                phase_time -= QD/frequency
-                pass
+				if 	current_phase < threshold * (1/N):
+            	
+					QD = -coupling_strengthP*(current_phase-(threshold/N))
+					current_phase = current_phase + QD #Calculating how much phase to change\
+					phase_time -= QD/frequency
+					pass
                 # move backwards in phase
-            elif current_phase > threshold * (N-1)/N:
-                QA = -coupling_strengthP*(current_phase-(threshold-threshold/N))
-                Current_phase = current_phase + QA #Calculating how much phase to change
-                phase_time -= QA/frequency
-                
-                pass
+				elif 	current_phase > threshold * (N-1)/N:
+
+					QA = -coupling_strengthP*(current_phase-(threshold-threshold/N))
+					current_phase = current_phase + QA #Calculating how much phase to change
+					phase_time -= QA/frequency
+            	 		pass
                 # move forwards in phase
-            else:
-                pass
+				else:
+					#no mov
+					pass
                 # Don't move at all
             # End if
             
@@ -138,11 +136,11 @@ while True:
 
 		# End if
 		
-		if (time.time()-data_time) > data_step:
-			print("Current phase value: {0} degrees".format(current_phase)) # Display phase data to screen
-			data_time += data_step # Increment data_time
+				if (time.time()-data_time) > data_step:
+					print("Current phase value: {0} degrees".format(current_phase)) # Display phase data to screen
+					data_time += data_step # Increment data_time
 		# End if
-	except KeyboardInterrupt:
+	except Keyboardinterrupt: 
 		break
 # End while
 
