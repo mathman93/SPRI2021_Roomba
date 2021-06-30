@@ -2,7 +2,7 @@
 Purpose: Basic code for running Xbee, and illustrating code behavior.
 	Sets up Xbee;
 IMPORTANT: Must be run using Python 3 (python3)
-Last Modified: 6/29/2021
+Last Modified: 6/30/2021
 By: Jamez White
 '''
 ## Import libraries ##
@@ -90,41 +90,29 @@ while True:
 			# received_pulse = "z" (pulse)
 			print(received_pulse) # To see what the message is
             # Update phase value based on (de)sync algorithm.
-            # DESYNC algorithm - move to the midpoint
-		if just_fired == False:
-			pass
-                # Save value of oscillator in front of me.
-                # (forward_phase = threshold - current_phase)
-		else: 
-				pass
-                # Backward_phase = (-1)*current_phase
-                # Calculated midpoint, and move there
-				just_fired = False
-    		
-            
             # Inverse-MS algorithm - always move backwards
             
-				phase_change = -(coupling_strengthP)*current_phase
-                # alpha is pretty small, probably less than 0.1
-				current_phase += phase_change # (also update phase_time)
-				phase_time -= phase_change/frequency
+			phase_change = -(coupling_strengthP)*current_phase
+            # alpha is pretty small, probably less than 0.1
+			current_phase += phase_change # (also update phase_time)
+			phase_time -= phase_change/frequency
             
             
             # PRF Desync - Look up value to change in PRF
             
-				if 	current_phase < threshold * (1/N):
+			if 	current_phase < threshold * (1/N):
             	
 					QD = -coupling_strengthP*(current_phase-(threshold/N))
 					current_phase = current_phase + QD #Calculating how much phase to change\
 					phase_time -= QD/frequency
-					pass
+					
                 # move backwards in phase
-				elif 	current_phase > threshold * (N-1)/N:
+			elif 	current_phase > threshold * (N-1)/N:
 
 					QA = -coupling_strengthP*(current_phase-(threshold-threshold/N))
 					current_phase = current_phase + QA #Calculating how much phase to change
 					phase_time -= QA/frequency
-            	 		pass
+    	 
                 
                 #No further changes, your PRF will be zero
                
@@ -134,11 +122,12 @@ while True:
 
 		# End if
 		
-				if (time.time()-data_time) > data_step:
-					print("Current phase value: {0} degrees".format(current_phase)) # Display phase data to screen
-					data_time += data_step # Increment data_time
+		if (time.time()-data_time) > data_step:
+			print("Current phase value: {0} degrees".format(current_phase)) # Display phase data to screen
+			data_time += data_step # Increment data_time
+		
 		# End if
-	except Keyboardinterrupt: 
+	except KeyboardInterrupt: 
 		break
 # End while
 
