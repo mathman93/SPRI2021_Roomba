@@ -105,7 +105,7 @@ while True:
             # Inverse-MS algorithm - always move backwards
              #alpha in Degesys 2007 is user inputed, page 6 out of 10
              alpha = .09
-             phase_change = -(alpha)*current_phase
+             phase_change = -(coupling_strengthP)*current_phase
                 # alpha is pretty small, probably less than 0.1
              current_phase += phase_change # (also update phase_time)
               phase_time += alpha/frequency
@@ -115,17 +115,17 @@ while True:
             # PRF Desync - Look up value to change in PRF
             
             #This one was similar to the synch one just with a few added things, (I think that was the whole point though), with that being said I assumed the symbol that looks like an l is coupling strength in another formed, so it was treated like so. 
-            if current_phase > threshold * (N-1)/N:
+            if  currrent < threshold * (1/N)::
             
-                QD = -coupling_strengthP(current_phase-(threshold/N)
+                QD = -coupling_strengthP*(current_phase-(threshold/N))
                 Current_phase = current_phase + QD #Calculating how much phase to change
-                phase_time += QD/frequency
+                phase_time -= QD/frequency
                 pass
                 # move backwards in phase
-            elif current_phase < threshold * (1/N):
-                QA = -coupling_strengthP(current_phase-(threshold-threshold/N)
+            elif current_phase > threshold * (N-1)/N:
+                QA = -coupling_strengthP*(current_phase-(threshold-threshold/N))
                 Current_phase = current_phase + QA #Calculating how much phase to change
-                phase_time += QA/frequency
+                phase_time -= QA/frequency
                 
                 pass
                 # move forwards in phase
@@ -134,7 +134,7 @@ while True:
                 # Don't move at all
             # End if
             
-            
+         
 
 		# End if
 		
