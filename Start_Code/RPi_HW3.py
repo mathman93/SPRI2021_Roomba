@@ -125,11 +125,9 @@ while True:
 					current_phase = current_phase + QA #Calculating how much phase to change
 					phase_time -= QA/frequency
             	 		pass
-                # move forwards in phase
-				else:
-					#no mov
-					pass
-                # Don't move at all
+                
+                #No further changes, your PRF will be zero
+               
             # End if
             
          
