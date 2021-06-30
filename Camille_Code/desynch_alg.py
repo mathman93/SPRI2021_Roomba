@@ -108,7 +108,9 @@ while True:
                 # Degrees we need to move
                 # midpoint is this calculation + current_phase
                 to_move = coupling_strength * ((1 / 2) * (front_phase + back_phase))
-                phase_time = phase_time - ((to_move + current_phase) / frequency)  # how much time do we take
+                # new current phase is current_phase + to_move
+                phase_time = phase_time - ((to_move) / frequency)  # how much time do we take
+                current_phase += to_move
 
             just_fired = False
 
