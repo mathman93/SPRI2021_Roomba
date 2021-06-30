@@ -35,6 +35,7 @@ while True:
     try:
         initial_phase = float(input("Initial oscillator phase? "))  # What are the units of 'phase'?
         print("Initial phase value: {0} degrees".format(initial_phase))
+        coupling_strength = float(input('Coupling Strength? (0-1) ')) # how much of the move do we want to complete
         break
     except ValueError:
         print("Not a number. Try again.")
@@ -59,6 +60,8 @@ phase_time = time.time() - (initial_phase / frequency)  # Time offset for the os
 # time.time() = phase_time + phase
 # time.time() - phase = phase_time
 pulse = 'z'  # Oscillator pulse character
+
+
 
 data_time = time.time()
 data_step = 0.5  # seconds
@@ -102,15 +105,16 @@ while True:
                 # Backward_phase = (-1)*current_phase
                 # phase at which next oscillator fires
                 back_phase = (-1) * current_phase
-                # Calculated midpoint, and move there
-                midpoint = (1 / 2) * (front_phase + back_phase)
-                phase_time = phase_time - ((midpoint - current_phase) / frequency)  # how much time do we take
+                # Degrees we need to move
+                # midpoint is this calculation + current_phase
+                to_move = coupling_strength * ((1 / 2) * (front_phase + back_phase))
+                phase_time = phase_time - ((to_move + current_phase) / frequency)  # how much time do we take
 
             just_fired = False
 
-            if (time.time() - data_time) > data_step:
-                print("Current phase value: {0} degrees".format(current_phase))  # Display phase data to screen
-                data_time += data_step  # Increment data_time
+        if (time.time() - data_time) > data_step:
+            print("Current phase value: {0} degrees".format(current_phase))  # Display phase data to screen
+            data_time += data_step  # Increment data_time
 
 
         # End if
