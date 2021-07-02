@@ -134,3 +134,33 @@ while True:
 
 Xbee.close()
 GPIO.cleanup() # Reset GPIO pins for next program
+
+''' Poster Content
+Abstract:
+
+1. Introduction:
+	a. What is the problem? ("Our research addresses the problem of...")
+	b. Why is it a problem?
+	c. What have other people done to solve this problem? (Literature review)
+	d. How are we going to solve this problem? (what is different or new?)
+
+2. "Methods":
+	Details on how we will solve the problem
+		What algorithms are we using?
+		What background information is needed?
+		Which variables mean what in the formulas?
+
+3. Results:
+	Data and figures from experiments or simulations
+		Provide experimental setup parameters and details
+		Explain important aspects of figures and tables
+		Discuss impliplications of the experimental results
+			What does the data mean?
+			How do these results show that our solution addresses the problem?
+
+4. Conclusion:
+	Summarize the problem, our solution, and the key results
+	Suggest future work based on what we did
+		How would we do these same experiments differently?
+		What should be the methods or experiments we look at next?
+'''
