@@ -10,6 +10,7 @@ import serial # For serial port functions (e.g., USB)
 import time # For accessing system time
 import RPi.GPIO as GPIO # For IO pin access on Raspberry Pi
 import math
+import os.path # For setting directory path for files
 
 ## Variables and Constants ##
 global Xbee # Specifies connection to Xbee
@@ -28,15 +29,26 @@ def DisplayDateTime():
 GPIO.setmode(GPIO.BCM) # Use BCM pin numbering for GPIO
 DisplayDateTime() # Display current date and time
 
+collect_data = False # Boolean for choosing to collect and save data from program
+
 while True:
 	try:
-		initial_phase = float(input("Initial oscillator phase? ")) # What are the units of 'phase'?
+		initial_phase = float(input("Initial oscillator phase? ")) # in degrees
 		print("Initial phase value: {0} degrees".format(initial_phase))
 		break
 	except ValueError:
 		print("Not a number. Try again.")
 		continue
 # End while
+
+if collect_data: # is True
+	# Open a text file for data retrieval
+	file_name_input = input("Name for data file: ")
+	dir_path = "/home/pi/SPRI2021_Roomba/Data_Files/" # Directory path to save file on Raspberry Pi
+	file_name = os.path.join(dir_path, file_name_input+".txt") # text file extension
+	file = open(file_name, "w") # Open a text file for storing data
+		# Will overwrite anything that was in the text file previously
+# End if
 
 # Clear out Xbee message buffer.
 if Xbee.inWaiting() > 0: # If anything is in the Xbee receive buffer
@@ -63,10 +75,11 @@ just_fired = False
 # Main Code #
 while True:
 	try:
+		current_time = time.time() # Get current time for the loop iteration (rather than calling it multiple different times)
 		#1. Get current phase value
 			# How fast is oscillator "spinning"?
 			# #time_phase = time.time() - phase_time
-		current_phase = (time.time() - phase_time)*frequency # The current phase of the oscillator (in degrees)
+		current_phase = (current_time - phase_time)*frequency # The current phase of the oscillator (in degrees)
 		
 		#2. Fire a pulse when phase reaches threshold
 			# 2a. reset phase value to zero.
@@ -77,9 +90,9 @@ while True:
 			current_phase -= threshold # Technically unnecessary
 			#current_phase -= (time_to_take*frequency)
 			# 2b. send pulse to other oscillators (Xbee)
-			Xbee.write(pulse.encode()) # Send the number over the Xbee
-			print("You sent stuff.")
-			just_fired = True
+			Xbee.write(pulse.encode()) # Send the pulse over the Xbee
+			print("You sent stuff.") # Include for debugging
+			just_fired = True # Boolean for DESYNC algorithm
 		# End if
 
 		#3. Check for any received pulses from other oscillators
@@ -117,21 +130,27 @@ while True:
 				pass
 				# Don't move at all
 			# End if
-
-
 		# End if
 		
-		if (time.time()-data_time) > data_step:
+		# Print out and save data
+		if (current_time-data_time) > data_step:
 			print("Current phase value: {0} degrees".format(current_phase)) # Display phase data to screen
+			if collect_data: # is True
+				# Write data to file
+				file.write("{0:.3f}, {1:.3f}\n".format(current_time, current_phase))
+			# End if
 			data_time += data_step # Increment data_time
 		# End if
-	except KeyboardInterrupt:
-		break
+	except KeyboardInterrupt: # (e.g., Ctrl + c)
+		break # End while loop and exit code cleanly
 # End while
 
 ## -- Ending Code Starts Here -- ##
 # Make sure this code runs to end the program cleanly
 
+if collect_data: # is True
+	file.close() # Close data file when done.
+# End if
 Xbee.close()
 GPIO.cleanup() # Reset GPIO pins for next program
 
