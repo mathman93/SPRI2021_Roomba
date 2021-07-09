@@ -127,7 +127,7 @@ while True:
 			print("Current phase value: {0} degrees".format(current_phase)) # Display phase data to screen
 			if collect_data: #is true
 				#Write data is file
-				file.write(" {0:.3f), {1:.3f\n".format(current_time, current_phase))
+				file.write(" {0:.3f}, {1:.3f}\n".format(current_time, current_phase))
 			#End if
 			data_time += data_step # Increment data_time.
 		# End if
