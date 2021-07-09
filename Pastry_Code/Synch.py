@@ -85,7 +85,7 @@ while True:
 		#1. Get current phase value
 			# How fast is oscillator "spinning"?
 			# #time_phase = time.time() - phase_time
-		current_phase = (time.time() - phase_time)*frequency # The current phase of the oscillator (in degrees)
+		current_phase = (current_time - phase_time)*frequency # The current phase of the oscillator (in degrees)
 		
 		#2. Fire a pulse when phase reaches threshold
 			# 2a. reset phase value to zero.
@@ -123,7 +123,7 @@ while True:
 
 		# End if
 		
-		if (time.time()-data_time) > data_step:
+		if (current_time-data_time) > data_step:
 			print("Current phase value: {0} degrees".format(current_phase)) # Display phase data to screen
 			if collect_data: #is true
 				#Write data is file
@@ -137,6 +137,8 @@ while True:
 
 ## -- Ending Code Starts Here -- ##
 # Make sure this code runs to end the program cleanly
+if collect_data: #is True
+    file.close()
 
 Xbee.close()
 GPIO.cleanup() # Reset GPIO pins for next program
