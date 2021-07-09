@@ -30,7 +30,7 @@ def DisplayDateTime():
 GPIO.setmode(GPIO.BCM) # Use BCM pin numbering for GPIO
 DisplayDateTime() # Display current date and time
 
-collect_data = False
+collect_data = True
 
 while True:
 	try:
@@ -62,7 +62,7 @@ if Xbee.inWaiting() > 0: # If anything is in the Xbee receive buffer
 	#print(x) # Include for debugging
 # End if
 
-time_to_take = 2.0 # Length of cycle in seconds
+time_to_take = 10.0 # Length of cycle in seconds
 # frequency = 180 # degrees per second
 threshold = 360 # "degrees" (could be radians)
 frequency = threshold / time_to_take # degrees per second
@@ -77,7 +77,7 @@ pulse = 'z' # Oscillator pulse character
 
 coupling_strengthP = coupling_strength/100 # this conversts the coupling strength in a percent so we can use it later.
 data_time = time.time()
-data_step = .2 # seconds
+data_step = .1 # seconds
 # Main Code #
 while True:
 	try:
