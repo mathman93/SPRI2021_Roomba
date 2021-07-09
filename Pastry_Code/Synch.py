@@ -10,6 +10,8 @@ import serial # For serial port functions (e.g., USB)
 import time # For accessing system time
 import RPi.GPIO as GPIO # For IO pin access on Raspberry Pi
 import math
+import os.path
+
 
 ## Variables and Constants ##
 global Xbee # Specifies connection to Xbee
@@ -28,8 +30,12 @@ def DisplayDateTime():
 GPIO.setmode(GPIO.BCM) # Use BCM pin numbering for GPIO
 DisplayDateTime() # Display current date and time
 
+collect_data = False
+
 while True:
 	try:
+		
+
 		initial_phase = float(input("Initial oscillator phase? ")) # What are the units of 'phase'?
 		print("Initial phase value: {0} degrees".format(initial_phase))
 		coupling_strength = float(input("Enter coupling strength ")) # What percentage of
@@ -39,6 +45,16 @@ while True:
 		print("Not a number. Try again.")
 		continue
 # End while
+
+if collect_data: #Is true
+	#open a text file for data retriveal
+	file_name_input = input("Name for data file: ")
+	dir_path = "/home/pi/SPRI2021_Roomba/Data_Files/" # Directory path to file save
+	file_name = os.path.join(dir_path, file_name_input+".txt") #txt file extension
+	file = open(file_name, "w") # Open the text file for storing data
+		#Will over write anything that was in the text file previously
+
+#Emd if
 
 # Clear out Xbee message buffer.
 if Xbee.inWaiting() > 0: # If anything is in the Xbee receive buffer
@@ -58,12 +74,14 @@ phase_time = time.time() - (initial_phase/frequency) # Time offset for the oscil
 # time.time() - phase = phase_time
 pulse = 'z' # Oscillator pulse character
 
+
 coupling_strengthP = coupling_strength/100 # this conversts the coupling strength in a percent so we can use it later.
 data_time = time.time()
-data_step = 1.0 # seconds
+data_step = .2 # seconds
 # Main Code #
 while True:
 	try:
+		current_time = time.time()
 		#1. Get current phase value
 			# How fast is oscillator "spinning"?
 			# #time_phase = time.time() - phase_time
@@ -107,7 +125,11 @@ while True:
 		
 		if (time.time()-data_time) > data_step:
 			print("Current phase value: {0} degrees".format(current_phase)) # Display phase data to screen
-			data_time += data_step # Increment data_time
+			if collect_data: #is true
+				#Write data is file
+				file.write(" {0:.3f), {1:.3f\n".format(current_time, current_phase))
+			#End if
+			data_time += data_step # Increment data_time.
 		# End if
 	except KeyboardInterrupt:
 		break
