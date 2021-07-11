@@ -54,7 +54,7 @@ while True:
 if collect_data:
     #Open a text file for data retriveal
     file_name_input = input("Name for data file: ")
-    dir_path = "/home/pi/SPRI2021_Roomab/Data_Files/" # Director path to file save
+    dir_path = "/home/pi/SPRI2021_Roomba/Data_Files" # Director path to file save
     file_name = os.path.join(dir_path, file_name_input+".txt")
     file = open(file_name, "w") #Open the text file for storing data
     #Will over write anything that was in the text file reviously
