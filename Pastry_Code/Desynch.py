@@ -60,7 +60,7 @@ pulse = 'z' # Oscillator pulse character
 
 coupling_strengthP = coupling_strength/100 # this conversts the coupling strength in a percent so we can use it later.
 data_time = time.time()
-data_step = 1.0 # seconds
+data_step = .1 # seconds
 just_fired = False
 # Main Code #
 while True:
