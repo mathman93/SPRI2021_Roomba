@@ -2,7 +2,7 @@
 Purpose: Basic code for running Xbee, and illustrating code behavior.
 	Sets up Xbee;
 IMPORTANT: Must be run using Python 3 (python3)
-Last Modified: 6/21/2021
+Last Modified: 7/12/2021
 By: Timothy Anglea
 '''
 ## Import libraries ##
@@ -33,8 +33,8 @@ collect_data = False # Boolean for choosing to collect and save data from progra
 
 while True:
 	try:
-		initial_phase = float(input("Initial oscillator phase? ")) # in degrees
-		print("Initial phase value: {0} degrees".format(initial_phase))
+		initial_heading = float(input("Initial robot heading value? ")) # in degrees
+		print("Initial phase value: {0} degrees".format(initial_heading))
 		break
 	except ValueError:
 		print("Not a number. Try again.")
@@ -63,12 +63,15 @@ threshold = 360 # "degrees" (could be radians)
 frequency = threshold / time_to_take # degrees per second
 # time_to_take = threshold/frequency
 # frequency * time_to_take = threshold
+initial_phase = initial_heading
 phase_time = time.time() - (initial_phase/frequency) # Time offset for the oscillator
+#heading = initial_phase (spinning robot again)
 # (time.time() - phase_time) = phase
 # time.time() = phase_time + phase
 # time.time() - phase = phase_time
 pulse = 'z' # Oscillator pulse character
 
+heading = initial_heading # Variable for direction of robot
 data_time = time.time()
 data_step = 0.5 # seconds
 just_fired = False
@@ -80,7 +83,8 @@ while True:
 			# How fast is oscillator "spinning"?
 			# #time_phase = time.time() - phase_time
 		current_phase = (current_time - phase_time)*frequency # The current phase of the oscillator (in degrees)
-		
+		#heading = current_phase # Robots are constantly spinning (not good)
+
 		#2. Fire a pulse when phase reaches threshold
 			# 2a. reset phase value to zero.
 		if current_phase >= threshold:
@@ -115,9 +119,10 @@ while True:
 			just_fired = False
 			
 			# Inverse-MS algorithm - always move backwards
-			# phase_change = -(alpha)*current_phase
+			#phase_change = -(alpha)*current_phase
 				# alpha is pretty small, probably less than 0.1
-			# current_phase += phase_change (also update phase_time)
+			#current_phase += phase_change #(also update phase_time)
+			#heading += phase_change # (Update robot heading value by the same amount)
 
 			# PRF Desync - Look up value to change in PRF
 			if current_phase > threshold * (N-1)/N:
@@ -137,7 +142,7 @@ while True:
 			print("Current phase value: {0} degrees".format(current_phase)) # Display phase data to screen
 			if collect_data: # is True
 				# Write data to file
-				file.write("{0:.3f}, {1:.3f}\n".format(current_time, current_phase))
+				file.write("{0:.3f}, {1:.3f}, {2:.3f}\n".format(current_time, current_phase, heading))
 			# End if
 			data_time += data_step # Increment data_time
 		# End if
