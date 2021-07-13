@@ -75,7 +75,7 @@ phase_time = time.time() - (initial_phase/frequency) # Time offset for the oscil
 # time.time() - phase = phase_time
 pulse = 'z' # Oscillator pulse character
 
-
+heading = initial_heading
 coupling_strengthP = coupling_strength/100 # this conversts the coupling strength in a percent so we can use it later.
 data_time = time.time()
 data_step = .1 # seconds
