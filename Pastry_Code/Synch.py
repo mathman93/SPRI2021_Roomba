@@ -36,8 +36,8 @@ while True:
 	try:
 		
 
-		initial_phase = float(input("Initial oscillator phase? ")) # What are the units of 'phase'?
-		print("Initial phase value: {0} degrees".format(initial_phase))
+		initial_heading = float(input("Initial robot heading ")) # What are the units of 'phase'?
+		print("Initial phase value: {0} degrees".format(initial_heading))
 		coupling_strength = float(input("Enter coupling strength ")) # What percentage of
 		print("Coupling_strength: {0} %".format(coupling_strength))
 		break
@@ -68,6 +68,7 @@ threshold = 360 # "degrees" (could be radians)
 frequency = threshold / time_to_take # degrees per second
 # time_to_take = threshold/frequency
 # frequency * time_to_take = threshold
+initial_phase = initial_heading
 phase_time = time.time() - (initial_phase/frequency) # Time offset for the oscillator
 # (time.time() - phase_time) = phase
 # time.time() = phase_time + phase
@@ -113,13 +114,15 @@ while True:
                     
 					current_phase = current_phase + QD #Calculating how much phase to change
 					phase_time += -QD/frequency  #Converting from degrees to seconds to update phase_time
-                    
+					heading += QD
+
 			elif current_phase >= (threshold/2): # If equation is set for a advance
             
 					QA = (coupling_strengthP*(threshold-current_phase)) #My Q function for advance
                     
 					current_phase  = current_phase + QA #Calculating how much phase to change
 					phase_time += -QA/frequency #Converting from degrees to seconds to update phase_time
+					heading += QA
 
 		# End if
 		
@@ -127,7 +130,7 @@ while True:
 			print("Current phase value: {0} degrees".format(current_phase)) # Display phase data to screen
 			if collect_data: #is true
 				#Write data is file
-				file.write(" {0:.3f}, {1:.3f}\n".format(current_time, current_phase))
+				file.write(" {0:.3f}, {1:.3f}, {2:.3f}\n".format(current_time, current_phase, heading))
 			#End if
 			data_time += data_step # Increment data_time.
 		# End if
