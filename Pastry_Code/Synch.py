@@ -49,7 +49,7 @@ while True:
 if collect_data: #Is true
 	#open a text file for data retriveal
 	file_name_input = input("Name for data file: ")
-	dir_path = "/home/pi/SPRI2021_Roomba/Data_Files/Pastry_Recipies/DataTBU" # Directory path to file save
+	dir_path = "/home/pi/SPRI2021_Roomba/Data_Files/Pastry_Recipies " # Directory path to file save
 	file_name = os.path.join(dir_path, file_name_input+".txt") #txt file extension
 	file = open(file_name, "w") # Open the text file for storing data
 		#Will over write anything that was in the text file previously
