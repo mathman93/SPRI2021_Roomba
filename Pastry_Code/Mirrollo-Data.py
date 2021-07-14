@@ -9,8 +9,8 @@ import math
 Purpose: Basic code for running Xbee, and illustrating code behavior.
 	Sets up Xbee;
 IMPORTANT: Must be run using Python 3 (python3)
-Last Modified: 6/21/2021
-By: Timothy Anglea
+Last Modified: 7/14/2021
+By: James White
 '''
 ## Import libraries ##
 import serial  # For serial port functions (e.g., USB)
@@ -43,8 +43,8 @@ collect_data = True
 
 while True:
     try:
-        initial_phase = float(input("Initial oscillator phase? "))  # What are the units of 'phase'?
-        print("Initial phase value: {0} degrees".format(initial_phase))
+        initial_heading = float(input("Initial robot heading "))  # What are the units of 'phase'?
+        print("Initial phase value: {0} degrees".format(initial_heading))
         break
     except ValueError:
         print("Not a number. Try again.")
@@ -54,7 +54,7 @@ while True:
 if collect_data:
     #Open a text file for data retriveal
     file_name_input = input("Name for data file: ")
-    dir_path = "/home/pi/SPRI2021_Roomba/Data_Files" # Director path to file save
+    dir_path = "/home/pi/SPRI2021_Roomba/Data_Files/Pastry_Recipies" # Director path to file save
     file_name = os.path.join(dir_path, file_name_input+".txt")
     file = open(file_name, "w") #Open the text file for storing data
     #Will over write anything that was in the text file reviously
@@ -71,6 +71,7 @@ threshold = 360  # "degrees" (could be radians)
 frequency = threshold / time_to_take  # degrees per second
 # time_to_take = threshold/frequency
 # frequency * time_to_take = threshold
+initial_phase = initial_heading
 phase_time = time.time() - (initial_phase / frequency)  # Time offset for the oscillator
 # (time.time() - phase_time) = phase
 # time.time() = phase_time + phase
@@ -78,6 +79,7 @@ phase_time = time.time() - (initial_phase / frequency)  # Time offset for the os
 pulse = 'z'  # Oscillator pulse character
 updated_phase = None
 
+heading = initial_heading
 data_time = time.time()
 data_step = .1  # seconds
 
@@ -120,6 +122,7 @@ while True:
             else:
                 updated_phase = g * threshold  # scales it up to threshold
                 phase_time = phase_time - ((updated_phase - current_phase) / frequency)  # how much time do we take
+                heading += updated_phase
 
                 # End if
 
@@ -127,7 +130,7 @@ while True:
             print("Current phase value: {0} degrees".format(current_phase))  # Display phase data to screen
             if collect_data:
                 #Write data is file
-                file.write(" {0:.3f}, {1:.3f}\n".format(current_time, current_phase)) 
+                file.write(" {0:.3f}, {1:.3f}, {2:.3f}\n".format(current_time, current_phase, heading))
             data_time += data_step  # Increment data_time
             # End if
     except KeyboardInterrupt:

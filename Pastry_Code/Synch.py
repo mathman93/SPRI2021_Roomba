@@ -2,7 +2,7 @@
 Purpose: Basic code for running Xbee, and illustrating code behavior.
 	Sets up Xbee;
 IMPORTANT: Must be run using Python 3 (python3)
-Last Modified: 6/25/2021
+Last Modified: 7/14/2021
 By: Jamez White
 '''
 ## Import libraries ##
